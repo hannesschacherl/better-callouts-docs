@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Life]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>lib/media/favicon.png</url><title>Life</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Sun, 30 Mar 2025 14:49:03 GMT</lastBuildDate><atom:link href="lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Sun, 30 Mar 2025 14:49:03 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Better Callouts Documentation]]></title><description><![CDATA[ 
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Life]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>lib/media/favicon.png</url><title>Life</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Sun, 30 Mar 2025 16:10:26 GMT</lastBuildDate><atom:link href="lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Sun, 30 Mar 2025 16:10:26 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[Better Callouts Documentation]]></title><description><![CDATA[ 
  <br>
   <img class="light-logo" style="display: block; margin: 0;" src="lib/media/better-callouts-logo-light.svg" referrerpolicy="no-referrer">
   <img class="dark-logo" style="display: block; margin: 0;" src="lib/media/better-callouts-logo-dark.svg" referrerpolicy="no-referrer">
   30.03.2025
 <br><br>Info
 Better Callouts is an Obsidian plugin that lets you create, edit, and manage custom callout styles visually — no CSS knowledge needed. It handles everything for you, including automatic snippet generation.
-<br><br><br>
+<br><br>
 <br>🎨 Visual editor for creating callouts
 <br>🧠 Custom color, text color, and optional border for the callouts
 <br>💾 Generates valid Obsidian CSS snippets
@@ -19,6 +19,7 @@ Better Callouts is an Obsidian plugin that lets you create, edit, and manage cus
 <br>Enable BetterCallouts (This adds all styles created by the plugin to your notes)
 <br>If you use Obsidian Publish:<br>
 <br>Add the changes from the .obsidian/snippets/betterCallouts.css to your publish.css file for them to work on the published Obsidian
+<br>I would recommend setting up a file watcher that watches the .obsidian/snippets/ folder and runs a shell script to merge the files into your publish.css when detecting changes
 <br><br><br>
 <br>Go to Settings → Better Callouts
 <br>Click the + button to add a new callout
@@ -26,14 +27,20 @@ Better Callouts is an Obsidian plugin that lets you create, edit, and manage cus
 <br>Fill out the following fields:
 
 <br>Label: Name of the callout (e.g. "Important")
-<br>Color: Background color (any valid CSS code will work in here)
-<br>Text: Text color (any valid CSS code will work in here)
+<br>Color: Background color
+<br>Text: Text color
 <br>Border: (optional) Enable and set a left border color
-<br>Border Color: (only if Border is set to yes) Add a color for the border (any valid CSS code will work in here)
+<br>Border Color: (only if Border is set to yes) Add a color for the border
 
 
 <br>The callout preview will update in real time.
 <br>Your callout will be saved automatically and added to the generated CSS snippet.
+<br>Accepted colors:<br>
+<br>Named colors (e.g. red, blue, darkgreen)
+<br>HEX values (e.g. #ffcc00, #123456)
+<br>RGB and RGBA (e.g. rgb(255, 0, 0), rgba(0, 128, 255, 0.2))
+<br>HSL and HSLA (e.g. hsl(200, 100%, 50%), hsla(0, 100%, 50%, 0.5))
+<br>Obsidian variables (e.g. var(--text-accent), var(--color-base-40))
 <br><br><br>The Plugin uses the following files:<br>Vault
 ├── .obsidian
 │   ├── plugins
@@ -43,27 +50,12 @@ Better Callouts is an Obsidian plugin that lets you create, edit, and manage cus
 │   │   │   └── manifest.json
 │   ├── snippets
 │   │   ├── betterCallouts.css
-<br>plugins &gt; better-callouts: here is the logic for everything this plugin does<br>
-snippets &gt; betterCallouts.css: this is the automatically generated CSS-File<br><br>Once you've done all steps above you can fully enjoy the custom Callouts but you need to add them manually like this:<br>&gt; [!c-my-callout] Title
+<br>plugins &gt; better-callouts &gt; main.js: here is the logic for everything this plugin does<br>plugins &gt; better-callouts &gt; data.json: here are all your custom callouts stored<br>plugins &gt; better-callouts &gt; manifest.json: tells obsidian information about this plugin<br>snippets &gt; betterCallouts.css: this is the automatically generated CSS-File<br><br>Nice! Now You've set up the plugin to work for all your custom callouts.<br>You can insert them into your file using code like this:<br>&gt; [!c-my-callout] Title
 &gt; Content
-<br>If you want to make this process better you can:<br>
-<br>install the plugin Templater via the Community Plugins Tab.
-<br>Set your Templates folder in the Templater Settings
-<br>Create a new file in the Templates folder
-<br>Call my plugins API inside a Templater block, that inserts the Callout like this:
-<br>&lt;%*
-const selected = await app.plugins.plugins["better-callouts"]
-.api.getSelectedColorAsync();
-
-if (selected) {
-  tR += `&gt; [!${selected}]\n&gt; `;
-}
-%&gt;
-<br>What this does:<br>
-<br>Opens a Menu that displays the Callout's colors and their name for you to choose from
-
-  <img style="border-radius: 1em; border: 10px solid var(--background-secondary); max-width: 100%;" src="lib/media/better-callouts-modal.png" referrerpolicy="no-referrer">
-
-
-<br>If you've chosen one, Templater will insert a blank callout with the chosen custom callout into your file
-]]></description><link>+/better-callouts-documentation.html</link><guid isPermaLink="false">+/Better Callouts Documentation.md</guid><pubDate>Sun, 30 Mar 2025 12:10:03 GMT</pubDate><enclosure url="lib/media/better-callouts-logo-light.svg" length="0" type="image/svg+xml"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;lib/media/better-callouts-logo-light.svg&quot;&gt;&lt;/figure&gt;</content:encoded></item></channel></rss>
+<br>The [!c-my-callout] for the callout you want to add is displayed in the settings screen of this plugin.<br>If you want an even easier way for inserting the callouts you can:<br>
+<br>press CTRL / CMD + P (to open the command palette)
+<br>search for Better Callouts: Insert better callout (only works when in edit mode)
+<br>select the callout you want to insert from the modal
+<br>
+  <img style="border-radius: 2em; border: 10px solid var(--background-secondary); max-width: 100%;" src="lib/media/better-callout-modal.png" referrerpolicy="no-referrer">
+]]></description><link>+/better-callouts-documentation.html</link><guid isPermaLink="false">+/Better Callouts Documentation.md</guid><pubDate>Sun, 30 Mar 2025 16:07:59 GMT</pubDate><enclosure url="lib/media/better-callouts-logo-light.svg" length="0" type="image/svg+xml"/><content:encoded>&lt;figure&gt;&lt;img src=&quot;lib/media/better-callouts-logo-light.svg&quot;&gt;&lt;/figure&gt;</content:encoded></item></channel></rss>
